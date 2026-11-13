@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.biblioteca.libros.models.Libro;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * YA ESTA HECHA, salvo el lado inverso de la relacion (TAREA 1.e).
@@ -27,4 +31,7 @@ public class Autor {
     private String nacionalidad;
 
     // TODO 1.e · el lado INVERSO de la relacion con Libro
+    @OneToMany(mappedBy = "autor")
+    private List<Libro> libros = new ArrayList<>();
+
 }
