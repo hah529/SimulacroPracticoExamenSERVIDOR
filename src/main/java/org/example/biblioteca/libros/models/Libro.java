@@ -51,7 +51,7 @@ public class Libro {
     @JoinColumn(name = "autor_id", nullable = false)
     private Autor autor;
 
-    @Column(nullable = false)
+    @Column(name = "is_deleted", nullable = false)
     private boolean deleted = false;
 
     @Column(name = "created_at", updatable = false)
