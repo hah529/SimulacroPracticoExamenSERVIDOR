@@ -6,6 +6,7 @@ import org.example.biblioteca.libros.dto.LibroResponse;
 import org.example.biblioteca.libros.exceptions.LibroBadRequestException;
 import org.example.biblioteca.libros.exceptions.LibroConflictException;
 import org.example.biblioteca.libros.exceptions.LibroNotFoundException;
+import org.example.biblioteca.libros.exceptions.LibroSinStockException;
 import org.example.biblioteca.libros.mappers.LibroMapper;
 import org.example.biblioteca.libros.models.Libro;
 import org.example.biblioteca.libros.repositories.LibrosRepository;
@@ -97,6 +98,7 @@ public class LibrosServiceImpl implements LibrosService {
         return mapper.toResponse(libroguardado);
     }
 
+    @Transactional
     @Override
     public LibroResponse update(Long id, LibroRequest request) {
 
@@ -120,16 +122,32 @@ public class LibrosServiceImpl implements LibrosService {
         return mapper.toResponse(libroActualizado);
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
 
+        var libro = librosRepository.findByIdAndDeletedFalse(id).orElseThrow(
+                () -> new LibroNotFoundException(id));
+        libro.setDeleted(true);
+        librosRepository.save(libro);
 
-
-        throw new UnsupportedOperationException("TODO 5.a");
     }
 
+    @Transactional
     @Override
     public LibroResponse ajustarStock(Long id, int cantidad) {
-        throw new UnsupportedOperationException("TODO 5.c");
+
+        var libro = librosRepository.findByIdAndDeletedFalse(id).orElseThrow(
+                () -> new LibroNotFoundException(id));
+
+        var nuevoStock =cantidad+libro.getStock();
+
+        if (nuevoStock<0) throw new LibroSinStockException(libro.getTitulo(),libro.getStock(),cantidad);
+
+        libro.setStock(cantidad);
+        librosRepository.save(libro);
+
+        return mapper.toResponse(libro);
+
     }
 }
