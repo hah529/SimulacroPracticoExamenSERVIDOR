@@ -24,6 +24,4 @@ public interface LibrosRepository
     Optional<Libro> findByIdAndDeletedFalse(Long id);
 
     boolean existsLibroByIsbn(String isbn);
-    
-
 }
