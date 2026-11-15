@@ -1,0 +1,243 @@
+{
+  "info": {
+    "_postman_id": "d3fc412a-8936-4424-b99a-77d8a3931996",
+    "name": "coleccionEjercicioPracticoExamenorig",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "60210702",
+    "_collection_link": "https://go.postman.co/collection/60210702-d3fc412a-8936-4424-b99a-77d8a3931996?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "01 Listar paginado",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/libros?page=0&size=3&sort=precio,desc",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "libros"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "3"
+            },
+            {
+              "key": "sort",
+              "value": "precio,desc"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "02 Filtros combinados",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/libros?autor=delibes&precioMax=13",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "libros"
+          ],
+          "query": [
+            {
+              "key": "autor",
+              "value": "delibes"
+            },
+            {
+              "key": "precioMax",
+              "value": "13"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "03 Libro que no existe",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/libros/999",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "libros",
+            "999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "04 Crear libro",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"las cronicas\",\n  \"isbn\": \"978-84-18173-00-4\",\n  \"precio\": 12.0,\n  \"stock\": 2,\n  \"anioPublicacion\": 2000,\n  \"autorId\": 1\n}\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/libros",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "libros"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "05 Crear con datos inválidos",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"titulo\": \"\",\n    \"isbn\": \"978-84-dsadsadsadsa-35-4\",\n    \"precio\": 10,\n    \"stock\":2,\n    \"anioPublicacion\": 100,\n    \"autorId\": 1\n\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/libros",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "libros"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "06 ISBN repetido",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"las cronicas\",\n  \"isbn\": \"978-84-233-2518-4\",\n  \"precio\": 12.0,\n  \"stock\": 2,\n  \"anioPublicacion\": 2000,\n  \"autorId\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/libros",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "libros"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "07 Retirar sin stock",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"cantidad\": -1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/libros/3/stock",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "libros",
+            "3",
+            "stock"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "08 Borrar (lógico)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/libros/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "libros",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
